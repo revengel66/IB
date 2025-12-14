@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Вычисление хэша ГОСТ Р 34.11-2012')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<main class="app-main py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="h3 text-center mb-4">Вычисление хэша ГОСТ Р 34.11-2012</h1>
+                        <form id="hashForm" class="hash-form" th:action="@{/hash}" method="post"
+                              enctype="multipart/form-data" novalidate>
+                            <div class="mb-3">
+                                <label for="fileInput" class="form-label">Выберите файл</label>
+                                <input type="file" class="form-control" id="fileInput" name="file" required
+                                       th:attr="data-min-size=${minFileSize}">
+                                <div class="form-text">
+                                    Поддерживаются файлы любого формата (Word, Excel, изображения и др.), размером не
+                                    менее <span th:text="${minFileSize / 1024}">1</span> КБ.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="hashOutput" class="form-label">Результат</label>
+                                <textarea id="hashOutput" class="form-control hash-output" rows="3" readonly
+                                          placeholder="Готовый хэш появится здесь"></textarea>
+                            </div>
+                            <input type="hidden" th:if="${_csrf != null}"
+                                   th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <div class="d-flex flex-wrap gap-3">
+                                <button type="submit" class="btn btn-primary" id="hashButton">Вычислить хэш</button>
+                                <button type="button" class="btn btn-outline-danger d-none" id="cancelHashButton">
+                                    Отменить
+                                </button>
+                            </div>
+                        </form>
+                        <div class="progress mt-4 d-none" id="hashProgressWrapper">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 id="hashProgressBar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100">0%
+                            </div>
+                        </div>
+                        <div id="hashMessage" class="alert mt-4 d-none" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: info-modals}"></th:block>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

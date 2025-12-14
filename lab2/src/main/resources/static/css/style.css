@@ -1,0 +1,21 @@
+.app-main {
+    min-height: calc(100vh - 120px);
+    background-color: #f7f7f9;
+}
+
+.hash-output {
+    font-family: "JetBrains Mono", Consolas, monospace;
+    letter-spacing: 0.04em;
+}
+
+.navbar-nav .nav-link {
+    cursor: pointer;
+}
+
+#hashProgressWrapper .progress-bar {
+    transition: width 0.2s ease-in-out;
+}
+
+#hashMessage {
+    min-height: 56px;
+}
