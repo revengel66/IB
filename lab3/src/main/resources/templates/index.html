@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('ГОСТ Р 34.12-2018 «Магма». Режим гаммирования')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<main class="app-main py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-9">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="h3 text-center mb-4">
+                            ГОСТ Р 34.12-2018 «Магма». Режим гаммирования (ГОСТ Р 34.13-2018)
+                        </h1>
+                        <form id="cipherForm" class="cipher-form" th:action="@{/cipher}" method="post"
+                              enctype="multipart/form-data" novalidate>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="fileInput" class="form-label">Исходный файл</label>
+                                    <input type="file" class="form-control" id="fileInput" name="file" required
+                                           th:attr="data-min-size=${minFileSize}">
+                                    <div class="form-text">
+                                        Любой формат, размер не менее <span th:text="${minFileSize / 1024}">1</span> КБ.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Режим работы</label>
+                                    <div class="d-flex gap-3 pt-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="mode" id="modeEncrypt"
+                                                   value="encrypt" checked>
+                                            <label class="form-check-label" for="modeEncrypt">Шифрование</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="mode" id="modeDecrypt"
+                                                   value="decrypt">
+                                            <label class="form-check-label" for="modeDecrypt">Расшифрование</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label for="keyHex" class="form-label">Ключ (256 бит, hex)</label>
+                                    <textarea id="keyHex" name="keyHex" class="form-control font-monospace" rows="3"
+                                              placeholder="64 шестнадцатеричных символа"></textarea>
+                                    <div class="form-text">
+                                        Можно ввести вручную или загрузить ключ из файла (hex либо 32 байта).
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="keyFile" class="form-label">Ключ из файла</label>
+                                    <input type="file" class="form-control" id="keyFile" name="keyFile"
+                                           accept=".txt,application/octet-stream">
+                                    <div class="form-text">
+                                        При наличии файла ключ берется из него, текст интерпретируется как hex.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6 col-xl-4">
+                                    <label for="counter" class="form-label">Начальный счётчик (64 бита, hex)</label>
+                                    <input type="text" class="form-control font-monospace" id="counter" name="counter"
+                                           placeholder="Например: 0000000000000001" required>
+
+                                </div>
+                                <div class="col-md-6 col-xl-4">
+                                    <label for="outputName" class="form-label">Имя выходного файла</label>
+                                    <input type="text" class="form-control" id="outputName" name="outputName"
+                                           placeholder="По умолчанию исходное имя + .gost/.plain">
+                                </div>
+                                <div class="col-xl-4 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100" id="cipherButton">
+                                        Выполнить
+                                    </button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" th:if="${_csrf != null}"
+                                   th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        </form>
+
+                        <div class="mt-4" id="resultSection">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="spinner-border text-primary d-none" id="cipherSpinner" role="status">
+                                    <span class="visually-hidden">Обработка...</span>
+                                </div>
+                                <div class="small text-muted flex-grow-1" id="statusText">
+                                    Гамма формируется шифрованием счётчика (CTR).
+                                </div>
+                            </div>
+                            <div id="cipherMessage" class="alert d-none" role="alert"></div>
+                            <div class="download-hint d-none" id="downloadHint">
+                                Результат сформирован. Если скачивание не началось, нажмите
+                                <a href="#" id="downloadLink">сюда</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: info-modals}"></th:block>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

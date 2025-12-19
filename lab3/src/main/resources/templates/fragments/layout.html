@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title th:text="${title}">Шифрование «Магма»</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:fragment="header">
+    <div class="container d-flex justify-content-center py-3">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="helpMenu" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Справка
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="helpMenu">
+                    <li>
+                        <button class="dropdown-item" type="button"
+                                data-bs-toggle="modal" data-bs-target="#about">
+                            О программе
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button"
+                                data-bs-toggle="modal" data-bs-target="#aboutAlgorithm">
+                            Об алгоритме
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<footer th:fragment="footer"></footer>
+
+<th:block th:fragment="info-modals">
+    <div class="modal fade" id="about" tabindex="-1" aria-labelledby="aboutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aboutLabel">О программе</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Лабораторная работа №3 по криптографии. Алгоритмы шифрования.</p>
+                    <p>Группа: ПИбд-43</p>
+                    <p>ФИО: Катышева Наталья Евгеньевна</p>
+                    <p>Вариант: 12</p>
+                    <p>Алгоритм: ГОСТ Р 34.12-2018 Магма (ГОСТ 28147). Режим гаммирования.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="aboutAlgorithm" tabindex="-1" aria-labelledby="aboutAlgorithmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aboutAlgorithmLabel">Об алгоритме «Магма»</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Блоковый шифр.</strong> «Магма» (ГОСТ 34.12-2018) — 64-битовый блочный шифр
+                        с ключом 256 бит. Каждый блок обрабатывается 32 раундами по схеме Фейстеля с официальными
+                        S-блоками из табл. 1 стандарта.</p>
+                    <p><strong>Режим гаммирования.</strong> Согласно ГОСТ Р 34.13-2018, гамма строится шифрованием
+                        последовательных значений счётчика (увеличение по модулю 2^64). Шифрование и расшифрование —
+                        XOR открытого текста и гаммы.</p>
+                    <p><strong>Назначение.</strong> Потоковое шифрование файлов любого формата с заданием ключа
+                        из 256-битного значения и синхропосылки (начальный счётчик).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="/js/scripts.js" th:src="@{/js/scripts.js}"></script>
+</th:block>
+</body>
+</html>

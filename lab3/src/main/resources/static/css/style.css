@@ -1,0 +1,23 @@
+.app-main {
+    min-height: calc(100vh - 120px);
+    background: radial-gradient(circle at 20% 20%, #eef3ff 0, #eef3ff 30%, #f7f7f9 70%);
+}
+
+.navbar-nav .nav-link {
+    cursor: pointer;
+}
+
+.cipher-form textarea,
+.cipher-form input[type="text"] {
+    font-family: "JetBrains Mono", Consolas, monospace;
+    letter-spacing: 0.03em;
+}
+
+.download-hint {
+    font-size: 0.95rem;
+    color: #0d6efd;
+}
+
+#cipherMessage {
+    min-height: 56px;
+}
